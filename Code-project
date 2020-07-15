@@ -1,0 +1,40 @@
+#define RedLED 5
+#define GreenLED 8
+#define GASPIN A5
+#define Buzzer 10
+
+void setup(){
+  Serial.begin(9600);
+  LEDINIT();
+  BUZZERINIT();
+  MQGas();
+}
+void MQGas(){
+  pinMode(GASPIN, INPUT);
+}
+void LEDINIT(){
+  pinMode(RedLED, OUTPUT);
+  pinMode(GreenLED,OUTPUT);
+}
+ void BUZZERINIT(){
+  pinMode(Buzzer, OUTPUT);
+}
+
+void loop() {
+  int gasnivel= analogRead(GASPIN);
+  Serial.print("Nivelul gazului:");
+  Serial.println(gasnivel);
+  if (gasnivel > 400)
+  {
+    digitalWrite(RedLED, HIGH);
+    digitalWrite(GreenLED, LOW);
+    tone(Buzzer, 1000, 200);
+  }
+  else
+  {
+    digitalWrite(RedLED, LOW);
+    digitalWrite(GreenLED, HIGH);
+    noTone(Buzzer);
+  }
+  delay(100);
+}
